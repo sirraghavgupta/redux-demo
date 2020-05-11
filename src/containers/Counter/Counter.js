@@ -44,6 +44,25 @@ const mapStateToProps = state => {
     return {
         ctr : state.counter
     };
-};
+}
 
+
+/**
+ * we have hooked the app with the store but how do we access the state inside 
+ * the containers. we use connect for that. 
+ * its a function which on execution returns a higher order component in which 
+ * we wrap the component. this hoc given by conect will allow us to access the
+ * state from the store in the component. 
+ * 
+ * we need to pass 2 things into the connect. one is the info about the slices 
+ * we want to access in this conatiner and the other is the actions which 
+ * this container will dispatch. 
+ * 
+ * this is the react way of creating subscriptions.
+ * 
+ * mapStateToProps means that we are mapping the state from the store to the
+ * props in this container as we no longer can and want to access the state 
+ * in the container. we also get props because we cant edit them. so we 
+ * can use actions only. so the redux flow is maintained. 
+ */
 export default connect(mapStateToProps)(Counter);
