@@ -4,35 +4,37 @@ const initialState = {
 
 const reducer = ( state = initialState, action ) => {
 
-    if( action.type === 'INCREMENT'){
-        return {
-            ...state,
-            counter : state.counter + 1
-        };
-    }
+    switch ( action.type ){
 
-    if( action.type === 'DECREMENT'){
-        return {
-            ...state,
-            counter : state.counter - 1
-        };
-    }
+        case 'INCREMENT' : 
+                return {
+                    ...state,
+                    counter : state.counter + 1
+                };
 
-    if( action.type === 'ADD'){
-        return {
-            ...state,
-            counter : state.counter + action.value
-        };
-    }
+        case 'DECREMENT' : 
+                return {
+                    ...state,
+                    counter : state.counter - 1
+                };
+                
+        case 'ADD' : 
+                return {
+                    ...state,
+                    counter : state.counter + action.value
+                };
+        
+        case 'SUBTRACT' : 
+                return {
+                    ...state,
+                    counter : state.counter - action.value
+                };
 
-    if( action.type === 'SUBTRACT'){
-        return {
-            ...state,
-            counter : state.counter - action.value
-        };
-    }
+        default : 
+        // we cant return null here, i made an error there. 
+                return state;
 
-    return state;
+    }
 }
 
 export default reducer;
