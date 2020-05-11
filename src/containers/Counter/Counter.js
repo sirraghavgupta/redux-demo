@@ -31,7 +31,7 @@ class Counter extends Component {
         return (
             <div>
                 <CounterOutput value={this.props.ctr} />
-                <CounterControl label="Increment" clicked={() => this.counterChangedHandler( 'inc' )} />
+                <CounterControl label="Increment" clicked={ this.props.onIncrementHandler } />
                 <CounterControl label="Decrement" clicked={() => this.counterChangedHandler( 'dec' )}  />
                 <CounterControl label="Add 5" clicked={() => this.counterChangedHandler( 'add', 5 )}  />
                 <CounterControl label="Subtract 5" clicked={() => this.counterChangedHandler( 'sub', 5 )}  />
@@ -40,12 +40,12 @@ class Counter extends Component {
     }
 }
 
+
 const mapStateToProps = state => {
     return {
         ctr : state.counter
     };
 }
-
 
 /**
  * we have hooked the app with the store but how do we access the state inside 
@@ -64,5 +64,29 @@ const mapStateToProps = state => {
  * props in this container as we no longer can and want to access the state 
  * in the container. we also get props because we cant edit them. so we 
  * can use actions only. so the redux flow is maintained. 
+ * 
+ * here we will get ctr as a prop to access the counter in the state. 
  */
-export default connect(mapStateToProps)(Counter);
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onIncrementHandler : () => dispatch({ type : 'INCREMENT' })
+    };
+}
+/**
+ * now here we see that we get the dispath method from the redux automatically. 
+ * like we had the store.dispatch() method when we implement redux without 
+ * react. 
+ * now, we need to pass the functions as props here and those functions are
+ * arrow functions which simply call the dispatch method just like we used to 
+ * dispatch methods in redux without react. 
+ * now, we get this onIncrementHandler as props in this component. 
+ */
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+/**
+ * here we always need to pass mapStateToProps or null otherwise. 
+ * else mapDispatchToProps is optional. 
+ */
