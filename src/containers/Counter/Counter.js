@@ -28,7 +28,7 @@ class Counter extends Component {
     }
 
     render () {
-        
+
         return (
             <div>
                 
@@ -38,7 +38,16 @@ class Counter extends Component {
                 <CounterControl label="Decrement"  clicked={ this.props.onDecrementHandler }  />
                 <CounterControl label="Add 5"      clicked={ this.props.onAdditionHandler }  />
                 <CounterControl label="Subtract 5" clicked={ this.props.onSubtractionHandler }  />
-            
+                <hr/>
+
+                <button onClick = { this.props.onAddRecordHandler }>add record</button>
+
+                <ul>
+                    { this.props.storedResults.map( ( result ) =>
+                        <li onClick = { this.props.onDeleteRecordHandler }
+                            key = { result.id } > {result.value} </li>
+                    ) }
+                </ul>
             </div>
         );
     }
@@ -47,7 +56,8 @@ class Counter extends Component {
 
 const mapStateToProps = state => {
     return {
-        ctr : state.counter
+        ctr : state.counter,
+        storedResults : state.results
     };
 }
 
@@ -78,7 +88,9 @@ const mapDispatchToProps = dispatch => {
         onIncrementHandler : () => dispatch({ type : 'INCREMENT' }),
         onDecrementHandler : () => dispatch({ type : 'DECREMENT' }),
         onAdditionHandler : () => dispatch({ type : 'ADD', value : 5 }),
-        onSubtractionHandler : () => dispatch({ type : 'SUBTRACT', value : 5 })
+        onSubtractionHandler : () => dispatch({ type : 'SUBTRACT', value : 5 }),
+        onAddRecordHandler : () => dispatch({ type : 'ADD_RECORD'}),
+        onDeleteRecordHandler : () => dispatch({ type : 'DELETE_RECORD'})
     };
 }
 /**
@@ -96,4 +108,18 @@ export default connect(mapStateToProps, mapDispatchToProps)(Counter);
 /**
  * here we always need to pass mapStateToProps or null otherwise. 
  * else mapDispatchToProps is optional. 
+ */
+
+
+/**
+ * note - 
+ * we can dispatch methods which we dont even handle in the reducer, they 
+ * simply get ignored in the reducer due to switch and we return the same old
+ * state. 
+ * 
+ * when we return the state in the reducer, it doesnt merge that with the old 
+ * state, it just replaces that. so, we need to spread the initial state and 
+ * then return the new state. 
+ * 
+ * 
  */
