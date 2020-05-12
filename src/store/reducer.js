@@ -1,3 +1,5 @@
+import * as actionTypes from '../store/actions';
+
 const initialState = {
     counter : 0,
     results : []
@@ -7,19 +9,19 @@ const reducer = ( state = initialState, action ) => {
 
     switch ( action.type ){
 
-        case 'INCREMENT' : 
+        case actionTypes.INCREMENT : 
                 return {
                     ...state,
                     counter : state.counter + 1
                 };
 
-        case 'DECREMENT' : 
+        case actionTypes.DECREMENT : 
                 return {
                     ...state,
                     counter : state.counter - 1
                 };
                 
-        case 'ADD' : 
+        case actionTypes.ADD : 
         /**
          * this is also a shallow copy of the initial state ut it does 
          * not matter because array is unchanged already. 
@@ -29,7 +31,7 @@ const reducer = ( state = initialState, action ) => {
                     counter : state.counter + action.value
                 };
         
-        case 'SUBTRACT' : 
+        case actionTypes.SUBTRACT : 
                 return {
                     ...state,
                     counter : state.counter - action.value
@@ -39,14 +41,14 @@ const reducer = ( state = initialState, action ) => {
          * while updating arrays, always use concat and not push because 
          * push edits the same array and gives error in state.
          */
-        case 'ADD_RECORD' : 
+        case actionTypes.ADD_RECORD : 
                 return {
                     ...state,
                     results : state.results.concat({ id : new Date(),
                                                 value : state.counter})
                 };
 
-        case 'DELETE_RECORD' : 
+        case actionTypes.DELETE_RECORD : 
         /**
          * we know that we need to update the array immutably. we can do it in 2 ways. 
          * if we have the index of the element we want to remove, we can use the splice 
