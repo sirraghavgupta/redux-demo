@@ -41,7 +41,7 @@ class Counter extends Component {
                 <CounterControl label="Subtract 5" clicked={ this.props.onSubtractionHandler }  />
                 <hr/>
 
-                <button onClick = { this.props.onAddRecordHandler }>add record</button>
+                <button onClick = { () => this.props.onAddRecordHandler(this.props.ctr) }>add record</button>
 
                 <ul>
                     { this.props.storedResults.map( ( result ) =>
@@ -57,9 +57,16 @@ class Counter extends Component {
 
 
 const mapStateToProps = state => {
+    /**
+     * now, we cant access the counter by state.counter because we have global 
+     * state now and we refer to that. 
+     * so, we say like give me counter from the ctr inside the global state. 
+     * like global state is merged state of the 2 reducer states ctr and red as
+     * specified in the index.js file. 
+     */
     return {
-        ctr : state.counter,
-        storedResults : state.results
+        ctr : state.ctr.counter,
+        storedResults : state.res.results
     };
 }
 
@@ -91,7 +98,11 @@ const mapDispatchToProps = dispatch => {
         onDecrementHandler : () => dispatch({ type : actionTypes.DECREMENT }),
         onAdditionHandler : () => dispatch({ type : actionTypes.ADD, value : 5 }),
         onSubtractionHandler : () => dispatch({ type : actionTypes.SUBTRACT, value : 5 }),
-        onAddRecordHandler : () => dispatch({ type : actionTypes.ADD_RECORD}),
+        /**
+         * pay attention to how we pass the current counter value to the action. 
+         * see in the event listeners above in the JSX. 
+         */
+        onAddRecordHandler : (currCount) => dispatch({ type : actionTypes.ADD_RECORD, result : currCount}),
 
         // see how to pass the id of the element. 
         onDeleteRecordHandler : (id) => dispatch({ type : actionTypes.DELETE_RECORD, resultId : id })
@@ -124,6 +135,4 @@ export default connect(mapStateToProps, mapDispatchToProps)(Counter);
  * when we return the state in the reducer, it doesnt merge that with the old 
  * state, it just replaces that. so, we need to spread the initial state and 
  * then return the new state. 
- * 
- * 
  */

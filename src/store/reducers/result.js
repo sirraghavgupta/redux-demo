@@ -1,7 +1,6 @@
-import * as actionTypes from '../store/actions';
+import * as actionTypes from '../../store/actions';
 
 const initialState = {
-    counter : 0,
     results : []
 }
 
@@ -9,34 +8,6 @@ const reducer = ( state = initialState, action ) => {
 
     switch ( action.type ){
 
-        case actionTypes.INCREMENT : 
-                return {
-                    ...state,
-                    counter : state.counter + 1
-                };
-
-        case actionTypes.DECREMENT : 
-                return {
-                    ...state,
-                    counter : state.counter - 1
-                };
-                
-        case actionTypes.ADD : 
-        /**
-         * this is also a shallow copy of the initial state ut it does 
-         * not matter because array is unchanged already. 
-         */
-                return {
-                    ...state,
-                    counter : state.counter + action.value
-                };
-        
-        case actionTypes.SUBTRACT : 
-                return {
-                    ...state,
-                    counter : state.counter - action.value
-                };
-        
         /**
          * while updating arrays, always use concat and not push because 
          * push edits the same array and gives error in state.
@@ -44,8 +15,13 @@ const reducer = ( state = initialState, action ) => {
         case actionTypes.ADD_RECORD : 
                 return {
                     ...state,
+                /**
+                 * we cant acces the state of one reducer into another reducer. 
+                 * so, now we dont get access to counter here and we need to get that 
+                 * with action object.
+                 */
                     results : state.results.concat({ id : new Date(),
-                                                value : state.counter})
+                                                value : action.result})
                 };
 
         case actionTypes.DELETE_RECORD : 
@@ -66,11 +42,12 @@ const reducer = ( state = initialState, action ) => {
          */
     
 
-        const newResults = state.results.filter( result => result.id !== action.resultId);
-        return {
-            ...state,
-            results : newResults
-        };
+            const newResults = state.results.filter( result => result.id !== action.resultId);
+            return {
+                ...state,
+                results : newResults
+            };
+
 
         default : 
         // we can't return null here, i made an error there. 

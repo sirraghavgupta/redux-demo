@@ -4,12 +4,24 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import { createStore } from 'redux';
-import reducer from './store/reducer';
+import { createStore, combineReducers } from 'redux';
+import counterReducer from './store/reducers/count';
+import resultReducer from './store/reducers/result';
 import { Provider } from 'react-redux';
 
 
-const store = createStore(reducer);
+/**
+ * we are trying to merge the reducers now by using this method. 
+ * we need to pass an object which maps different slices of our state to 
+ * different reducers.
+ */
+const rootReducer = combineReducers({
+      ctr : counterReducer,
+      res : resultReducer
+});
+
+// now we pass the root reducer in the store. 
+const store = createStore(rootReducer);
 
 /**
  * provide is a helper component which helps us to connext our app with redux 
