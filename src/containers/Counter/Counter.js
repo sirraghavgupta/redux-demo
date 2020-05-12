@@ -44,7 +44,8 @@ class Counter extends Component {
 
                 <ul>
                     { this.props.storedResults.map( ( result ) =>
-                        <li onClick = { this.props.onDeleteRecordHandler }
+                    // see how to pass the id of the element on click, good. 
+                        <li onClick = { () => this.props.onDeleteRecordHandler(result.id) }
                             key = { result.id } > {result.value} </li>
                     ) }
                 </ul>
@@ -90,7 +91,9 @@ const mapDispatchToProps = dispatch => {
         onAdditionHandler : () => dispatch({ type : 'ADD', value : 5 }),
         onSubtractionHandler : () => dispatch({ type : 'SUBTRACT', value : 5 }),
         onAddRecordHandler : () => dispatch({ type : 'ADD_RECORD'}),
-        onDeleteRecordHandler : () => dispatch({ type : 'DELETE_RECORD'})
+
+        // see how to pass the id of the element. 
+        onDeleteRecordHandler : (id) => dispatch({ type : 'DELETE_RECORD', resultId : id })
     };
 }
 /**
