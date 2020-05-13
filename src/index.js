@@ -38,10 +38,8 @@ const rootReducer = combineReducers({
 const logger = store => {
       return next => {
             return action => {
-                  console.log("reached logger");
                   console.log(' [MIDDLEWARE] disptching ', action);
                   const result = next(action);
-                  console.log("result - ", result);
                   console.log(' [MIDDLEWARE] next state ', store.getState());
                   return result;
             }

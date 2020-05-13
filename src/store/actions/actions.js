@@ -44,7 +44,6 @@ export const subtract = (val) => {
 
 // synchronous action creator for addResult
 export const saveResult = (res) => {
-    console.log("[ saveResult() ] - returning action object");
     return {
         type : ADD_RECORD,
         result : res
@@ -52,15 +51,9 @@ export const saveResult = (res) => {
 }
 
 export const addResult = (res) => {
-    console.log("[ addResult() ] - returning a function");
     return dispatch => {
-        console.log("triggering setTimeout .......");
-        setTimeout( () => {
-            console.log("inside setTimeout.., now running actual dispatch method");
-            dispatch(saveResult(res));
-        }, 3000);
-    }
-    
+        setTimeout( () => dispatch(saveResult(res)), 3000 );
+    }     
 }
 
 export const deleteResult = (id) => {

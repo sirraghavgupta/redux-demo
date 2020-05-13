@@ -9,7 +9,6 @@ const reducer = ( state = initialState, action ) => {
     switch ( action.type ){
 
         case actionTypes.ADD_RECORD :
-            console.log("reached reducer"); 
                 return {
                     ...state,
                     results : state.results.concat({ id : new Date(),

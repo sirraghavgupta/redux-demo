@@ -70,10 +70,7 @@ const mapDispatchToProps = dispatch => {
         onDecrementHandler : () => dispatch( actionCreators.decrement() ),
         onAdditionHandler : () => dispatch( actionCreators.add(5) ),
         onSubtractionHandler : () => dispatch( actionCreators.subtract(5) ),
-        onAddRecordHandler : (currCount) => {
-                            console.log("executing onAddRecordhandler()...");
-                            dispatch( actionCreators.addResult(currCount) );
-                        },
+        onAddRecordHandler : (currCount) => dispatch( actionCreators.addResult(currCount) ),
         onDeleteRecordHandler : (id) => dispatch( actionCreators.deleteResult(id) )
     };
 }
