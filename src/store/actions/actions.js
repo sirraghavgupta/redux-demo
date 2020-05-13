@@ -55,3 +55,9 @@ export const deleteResult = (id) => {
         resultId : id
     };
 }
+
+/**
+ * we can use action listeners for synchronous code also, 
+ * it makes the code more clean as all the action objects are now 
+ * at one place. 
+ */
