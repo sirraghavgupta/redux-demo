@@ -8,6 +8,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import counterReducer from './store/reducers/count';
 import resultReducer from './store/reducers/result';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 
 
 const rootReducer = combineReducers({
@@ -37,8 +38,10 @@ const rootReducer = combineReducers({
 const logger = store => {
       return next => {
             return action => {
-                  console.log(' [MIDDLEWARE] diaptching ', action);
+                  console.log("reached logger");
+                  console.log(' [MIDDLEWARE] disptching ', action);
                   const result = next(action);
+                  console.log("result - ", result);
                   console.log(' [MIDDLEWARE] next state ', store.getState());
                   return result;
             }
@@ -67,7 +70,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 // this is the syntax, we give the composeEnhancers() and the applyMiddleware() 
 // there. 
 const store = createStore(rootReducer, 
-                          composeEnhancers( applyMiddleware(logger) ));
+                          composeEnhancers( applyMiddleware(logger, thunk) ));
 
 // const store = createStore(rootReducer, applyMiddleware(logger));
 
