@@ -50,6 +50,28 @@ export const saveResult = (res) => {
     }
 }
 
+/**
+ * its a rule that only action OBJECTS can make a change the reducer. 
+ * 
+ * normally when we try to execute asycnc code here in the action creator or the reducer, then they 
+ * dont return anything, so we get undefined. because, the async code keeps running and we get out 
+ * of the function of the switch block and return empty hand. so, we cant execute the async code 
+ * like this. 
+ * 
+ * for this, we have thunk. it allows us to run async code with the action creator. 
+ * it allows us to return a function instead of the action object from the action creator. 
+ * now, the normal flow will try to dispatch the function and will succeed [ without thunk we were
+ * unable to dispatch the function throught next() ]. now, as we dispatched the function, thunk has 
+ * the ability to catch it in between. now, it executes the method and there we have the async code. 
+ * thunk has the ability to wait and call dispatch() when it wants. so, when the async task gets 
+ * finished, now it dispatches the action object. where it will come from? - so we need to create 
+ * another synchronous actionCreator for the same which will provide the action object. as we 
+ * compulsorily need to return the action object only. and now, it goes to the reducer and again the 
+ * middleware will be trigggered but not thunk, because we are not dispatching function now. 
+ * we are dispatching object. so, it will reach the reducer. 
+ * 
+ * awesome!!! 
+ */
 export const addResult = (res) => {
     return dispatch => {
         setTimeout( () => dispatch(saveResult(res)), 3000 );

@@ -8,6 +8,8 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import counterReducer from './store/reducers/count';
 import resultReducer from './store/reducers/result';
 import { Provider } from 'react-redux';
+
+// thunk is basically a default import, we can import by any name; 
 import thunk from 'redux-thunk';
 
 
