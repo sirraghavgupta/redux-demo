@@ -21,10 +21,7 @@ const reducer = ( state = initialState, action ) => {
                 };
                 
         case actionTypes.ADD : 
-        /**
-         * this is also a shallow copy of the initial state ut it does 
-         * not matter because array is unchanged already. 
-         */
+        
                 return {
                     ...state,
                     counter : state.counter + action.value
@@ -37,7 +34,6 @@ const reducer = ( state = initialState, action ) => {
                 };
 
         default : 
-        // we can't return null here, i made an error there. 
                 return state;
 
     }
